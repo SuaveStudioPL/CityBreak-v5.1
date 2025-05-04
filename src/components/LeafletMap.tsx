@@ -123,10 +123,11 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   const polylinesRef = useRef<L.LayerGroup | null>(null);
   const startMarkerRef = useRef<L.Marker | null>(null);
   const userLocationMarkerRef = useRef<L.Marker | null>(null); // Add ref for user location marker
-  const attractionMarkersRef = useRef<L.Marker[]>([]);
-  // const prevActiveAttractionsLength = useRef<number>(0); // Removed - Unused
-  // const initialCustomBoundsSet = useRef(false); // Removed - Replaced by transition logic
+  // Store markers by attraction ID to avoid recreating them unnecessarily
+  const attractionMarkersRef = useRef<Record<string, L.Marker>>({});
   const prevIsCustomMode = useRef(isCustomRouteMode); // Track previous mode state
+  // Track previous attractions to avoid unnecessary marker updates
+  const prevAttractionsRef = useRef<string[]>([]);
 
   // Import icons from shared utils
   const userLocationIcon = createUserLocationIcon();
@@ -151,7 +152,14 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     polylinesRef.current = null;
     startMarkerRef.current = null;
     userLocationMarkerRef.current = null; // Reset user location marker reference
-    attractionMarkersRef.current = [];
+
+    // Don't reset attraction markers reference - we'll handle them in the marker update effect
+    // Just ensure any existing markers are properly cleaned up
+    Object.values(attractionMarkersRef.current).forEach(marker => {
+      if (marker) marker.remove();
+    });
+    // Keep the reference object but clear its contents
+    attractionMarkersRef.current = {};
 
     if (!mapContainerRef.current) return;
 
@@ -267,17 +275,17 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       return;
     }
 
-    console.log("User location effect running. isUsingGeoLocation:", isUsingGeoLocation, "liveUserCoordinates:", liveUserCoordinates);
+    // Only log when debugging is needed
+    // console.log("User location effect running. isUsingGeoLocation:", isUsingGeoLocation, "liveUserCoordinates:", liveUserCoordinates);
 
     // Only handle user location marker updates here
     if (isUsingGeoLocation && liveUserCoordinates) {
       if (userLocationMarkerRef.current) {
-        // Update existing marker position without recreating it
-        console.log("Updating existing user location marker position");
+        // Update existing marker position without recreating it or logging
         userLocationMarkerRef.current.setLatLng([liveUserCoordinates.lat, liveUserCoordinates.lng]);
       } else {
         // Create marker if it doesn't exist yet
-        console.log("Creating new user location marker with start icon at", liveUserCoordinates);
+        console.log("Creating new user location marker with start icon");
 
         // Create the marker directly on the map, using the userLocationPane
         userLocationMarkerRef.current = L.marker(
@@ -288,8 +296,6 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
             pane: 'userLocationPane' // Use the dedicated pane
           }
         ).addTo(map);
-
-        console.log("User location marker created and added to map");
       }
     } else if (!isUsingGeoLocation && userLocationMarkerRef.current) {
       // Remove user location marker if geolocation is disabled
@@ -305,38 +311,50 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     const markersGroup = markersRef.current;
     if (!map || !markersGroup) return;
 
-    console.log("[LeafletMap Effect 2] Updating attraction markers.");
+    // Only log when attractions have changed to reduce noise
+    const currentAttractionIdsList = attractions.map(a => a.id);
+    const prevAttractionIds = prevAttractionsRef.current;
+    const attractionsChanged =
+      currentAttractionIdsList.length !== prevAttractionIds.length ||
+      currentAttractionIdsList.some((id, index) => id !== prevAttractionIds[index]);
 
-    // Clear existing attraction markers before redrawing
-    // But don't clear user location marker which is handled separately
-    markersGroup.clearLayers();
-    startMarkerRef.current = null;
-    // Don't reset userLocationMarkerRef here anymore
-    attractionMarkersRef.current = []; // Clear the ref array too
-
-    // Note: User location marker is now handled in a separate effect
-
-    // Add Start Marker only if not using geolocation
-    if (startLocation && !isUsingGeoLocation) {
-      // Create marker with default Leaflet icon initially
-      const startMarker = L.marker([startLocation.lat, startLocation.lng]).addTo(markersGroup);
-      startMarkerRef.current = startMarker;
-
-      // Asynchronously fetch and set the final start icon
-      getIcon('start')
-        .then(finalIcon => {
-          // Check if marker still exists and is on the map
-          if (startMarker && map?.hasLayer(startMarker)) {
-            startMarker.setIcon(finalIcon);
-          }
-        })
-        .catch(error => {
-          console.error("Error setting start marker icon:", error);
-          // Marker keeps the default icon on error
-        });
+    if (attractionsChanged) {
+      console.log("[LeafletMap Effect 2] Updating attraction markers due to changes.");
     }
 
-    // Click Handler
+    // Create a set of current attraction IDs for tracking
+    const currentAttractionIds = new Set<string>();
+
+    // Handle start marker
+    if (startLocation && !isUsingGeoLocation) {
+      if (!startMarkerRef.current) {
+        // Create marker with default Leaflet icon initially
+        const startMarker = L.marker([startLocation.lat, startLocation.lng]).addTo(markersGroup);
+        startMarkerRef.current = startMarker;
+
+        // Asynchronously fetch and set the final start icon
+        getIcon('start')
+          .then(finalIcon => {
+            // Check if marker still exists and is on the map
+            if (startMarker && map?.hasLayer(startMarker)) {
+              startMarker.setIcon(finalIcon);
+            }
+          })
+          .catch(error => {
+            console.error("Error setting start marker icon:", error);
+            // Marker keeps the default icon on error
+          });
+      } else {
+        // Update existing start marker position if it changed
+        startMarkerRef.current.setLatLng([startLocation.lat, startLocation.lng]);
+      }
+    } else if (startMarkerRef.current) {
+      // Remove start marker if not needed
+      startMarkerRef.current.remove();
+      startMarkerRef.current = null;
+    }
+
+    // Click Handler - defined outside the loop to avoid recreating it for each marker
     const handleMarkerClick = (attraction: Attraction, e: L.LeafletMouseEvent) => {
       map?.panTo([attraction.coordinates.lat, attraction.coordinates.lng]);
       const containerPoint = e.containerPoint;
@@ -351,12 +369,18 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       ? attractions.filter(a => a.id === activePtRouteAttractionId)
       : attractions;
 
-    // Add/Update Attraction Markers
+    // We already calculated attractionsChanged above, now update the ref with the current attractions
+    // Update the previous attractions ref with the attractions to draw
+    const currentAttractionIdsToDrawList = attractionsToDraw.map(a => a.id);
+    prevAttractionsRef.current = currentAttractionIdsToDrawList;
+
+    // Process each attraction
     attractionsToDraw.forEach((attraction) => {
       let iconNumber = '';
       let opacity = 1;
       let shouldDisplay = true;
       const isActive = activeAttractions.some(a => a.id === attraction.id);
+      currentAttractionIds.add(attraction.id);
 
       // --- Determine Marker Style based on Mode ---
       if (isCustomRouteMode) {
@@ -379,29 +403,65 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       // --- ---
 
       if (shouldDisplay) {
-        // Create marker with placeholder icon first
-        const placeholderIcon = getPlaceholderAttractionIcon(iconNumber);
-        const marker = L.marker([attraction.coordinates.lat, attraction.coordinates.lng], {
-          icon: placeholderIcon,
-          opacity: opacity, // Set initial opacity
-        }).addTo(markersGroup).on('click', (e) => handleMarkerClick(attraction, e));
-        attractionMarkersRef.current.push(marker); // Keep track of added markers
+        const existingMarker = attractionMarkersRef.current[attraction.id];
 
-        // Asynchronously fetch the final icon and update the marker
-        getIcon('attraction', iconNumber, attraction, cityTime)
-          .then(finalIcon => {
-            // Check if marker still exists and is on the map
-            if (marker && map?.hasLayer(marker)) {
-              marker.setIcon(finalIcon);
-              // Re-apply opacity in case it needs to be updated after async operation
-              // Although opacity is primarily determined by mode/skipped status set synchronously
-              marker.setOpacity(opacity);
-            }
-          })
-          .catch(error => {
-            console.error(`Error getting final icon for ${attraction.name}:`, error);
-            // Marker remains with the placeholder icon on error
-          });
+        if (existingMarker) {
+          // Update existing marker
+          existingMarker.setOpacity(opacity);
+
+          // Only update icon if needed (e.g., order changed)
+          const currentIconText = existingMarker.getIcon().options.html?.match(/>([^<]*)<\/div>/)?.[1]?.trim() || '';
+          if (currentIconText !== iconNumber || attractionsChanged) {
+            // Update with placeholder icon first for immediate feedback
+            existingMarker.setIcon(getPlaceholderAttractionIcon(iconNumber));
+
+            // Then fetch and set the final icon asynchronously
+            getIcon('attraction', iconNumber, attraction, cityTime)
+              .then(finalIcon => {
+                if (existingMarker && map?.hasLayer(existingMarker)) {
+                  existingMarker.setIcon(finalIcon);
+                  existingMarker.setOpacity(opacity);
+                }
+              })
+              .catch(error => {
+                console.error(`Error getting final icon for ${attraction.name}:`, error);
+              });
+          }
+        } else {
+          // Create new marker with placeholder icon
+          const placeholderIcon = getPlaceholderAttractionIcon(iconNumber);
+          const newMarker = L.marker([attraction.coordinates.lat, attraction.coordinates.lng], {
+            icon: placeholderIcon,
+            opacity: opacity,
+          }).addTo(markersGroup).on('click', (e) => handleMarkerClick(attraction, e));
+
+          // Store the new marker in our reference object
+          attractionMarkersRef.current[attraction.id] = newMarker;
+
+          // Asynchronously fetch and set the final icon
+          getIcon('attraction', iconNumber, attraction, cityTime)
+            .then(finalIcon => {
+              if (newMarker && map?.hasLayer(newMarker)) {
+                newMarker.setIcon(finalIcon);
+                newMarker.setOpacity(opacity);
+              }
+            })
+            .catch(error => {
+              console.error(`Error getting final icon for ${attraction.name}:`, error);
+            });
+        }
+      } else if (attractionMarkersRef.current[attraction.id]) {
+        // Remove marker if it shouldn't be displayed
+        attractionMarkersRef.current[attraction.id].remove();
+        delete attractionMarkersRef.current[attraction.id];
+      }
+    });
+
+    // Remove markers that are no longer needed
+    Object.keys(attractionMarkersRef.current).forEach(id => {
+      if (!currentAttractionIds.has(id)) {
+        attractionMarkersRef.current[id].remove();
+        delete attractionMarkersRef.current[id];
       }
     });
 
