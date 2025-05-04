@@ -1,0 +1,11 @@
+.logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logoLarge {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}

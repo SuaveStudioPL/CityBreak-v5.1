@@ -1,0 +1,32 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pulse animation for the start icon */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15); /* Slightly larger scale */
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to the div containing the start icon image */
+.start-icon-marker {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Ensure the divIcon wrapper doesn't interfere */
+.custom-div-icon {
+  background: none !important; /* Remove any background */
+  border: none !important; /* Remove any border */
+  box-shadow: none !important; /* Remove any shadow */
+}

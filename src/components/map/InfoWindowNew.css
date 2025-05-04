@@ -1,0 +1,402 @@
+/* Styles for the new info window - Centered Approach */
+.custom-info-window-wrapper {
+  position: absolute; /* Position relative to the map container (#leaflet-map) */
+  top: 50%;           /* Center vertically */
+  left: 50%;          /* Center horizontally */
+  transform: translate(-50%, -50%); /* Precise centering */
+  z-index: 1000; /* Ensure it's above map tiles and controls */
+  pointer-events: auto; /* Make the window interactive */
+  width: 280px; /* Default width */
+  max-width: 90vw; /* Responsive constraint */
+  max-height: 80vh; /* Limit height relative to viewport height as a fallback */
+  /* display: grid; */ /* No longer needed */
+  /* place-items: center; */ /* No longer needed */
+}
+
+.custom-info-window {
+  /* Size constraints are now mostly on the wrapper */
+  width: 100%; /* Fill the wrapper width */
+  max-height: 100%; /* Fill the wrapper max-height */
+  /* pointer-events: auto; */ /* Moved to wrapper */
+
+  /* Appearance */
+  background-color: rgba(18, 18, 18, 0.95);
+  color: #e0e0e0;
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(8px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
+}
+
+.custom-info-window-header {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 16px;
+  background-color: rgba(30, 30, 30, 0.5);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+/* Target the title span (first child) */
+.custom-info-window-header > span:first-child {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-info-window-body {
+  box-sizing: border-box;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.custom-info-window-description-container {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+.custom-info-window-more-button {
+  background-color: transparent;
+  color: #4a90e2;
+  border: none;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.custom-info-window-more-button:hover {
+  text-decoration: underline;
+}
+
+.custom-info-window-opening-hours,
+.custom-info-window-free-entry {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+.custom-info-window-opening-hours h4,
+.custom-info-window-free-entry h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #e0e0e0;
+}
+
+.custom-info-window-opening-hours p,
+.custom-info-window-free-entry p {
+  font-size: 13px;
+  margin: 0;
+  color: #b0b0b0;
+}
+
+.custom-info-window-description {
+  margin: 0;
+  line-height: 1.3;
+  font-size: 14px;
+  width: 100%;
+}
+
+.custom-info-window-category {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.custom-info-window-fun-fact {
+  background-color: rgba(30, 30, 30, 0.5);
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+.custom-info-window-fun-fact h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #60a5fa;
+}
+
+.custom-info-window-fun-fact p {
+  margin: 0;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.custom-info-window-button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.custom-info-window-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.custom-info-window-close {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.custom-info-window-close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.custom-info-window-tip {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid rgba(18, 18, 18, 0.95);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+  z-index: 1;
+  pointer-events: none; /* Ensure tip doesn't interfere with clicks */
+  display: none; /* Hide the tip completely */
+}
+
+/* Media queries for responsive design - improved */
+@media screen and (max-width: 480px) {
+  .custom-info-window-wrapper {
+    width: 240px;
+    max-width: 85vw; /* Zapewnia, że okno nie wyjdzie poza granice ekranu */
+  }
+
+  .custom-info-window-header {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .custom-info-window-body {
+    padding: 12px;
+    gap: 8px;
+    max-height: 70vh; /* Ogranicza wysokość, aby okno nie wychodziło poza ekran */
+    overflow-y: auto; /* Dodaje przewijanie, gdy zawartość jest zbyt duża */
+  }
+
+  .custom-info-window-opening-hours,
+  .custom-info-window-free-entry,
+  .custom-info-window-fun-fact {
+    padding: 8px;
+  }
+  
+  .custom-info-window-description {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .category-badge {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .custom-info-window-fun-fact h4 {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .custom-info-window-fun-fact p {
+    font-size: 11px;
+  }
+
+  .custom-info-window-body p {
+    font-size: 11px;
+    margin: 0;
+  }
+  
+  .custom-info-window-button {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .custom-info-window-wrapper {
+    width: 200px;
+  }
+
+  .custom-info-window-header {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .custom-info-window-body {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .custom-info-window-opening-hours,
+  .custom-info-window-free-entry,
+  .custom-info-window-fun-fact {
+    padding: 6px;
+  }
+  
+  .custom-info-window-description {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .category-badge {
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+
+  .custom-info-window-fun-fact h4 {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+
+  .custom-info-window-fun-fact p {
+    font-size: 10px;
+  }
+
+  .custom-info-window-body p {
+    font-size: 10px;
+  }
+  
+  .custom-info-window-button {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .custom-info-window-wrapper {
+    width: 180px;
+  }
+
+  .custom-info-window-header {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+
+  .custom-info-window-body {
+    padding: 8px;
+    gap: 4px;
+  }
+
+  .custom-info-window-opening-hours,
+  .custom-info-window-free-entry,
+  .custom-info-window-fun-fact {
+    padding: 4px;
+  }
+  
+  .custom-info-window-description {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .category-badge {
+    padding: 1px 3px;
+    font-size: 8px;
+  }
+
+  .custom-info-window-fun-fact h4 {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .custom-info-window-fun-fact p {
+    font-size: 9px;
+  }
+
+  .custom-info-window-body p {
+    font-size: 9px;
+  }
+  
+  .custom-info-window-button {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}
+
+/* Zoptymalizowane media queries dla tabletów */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .custom-info-window-wrapper {
+    width: 320px;
+  }
+  
+  .custom-info-window {
+    font-size: 16px;
+  }
+  
+  .custom-info-window-header {
+    font-size: 16px;
+    padding: 10px 16px;
+  }
+  
+  .custom-info-window-button {
+    padding: 10px 20px;
+  }
+  
+  .custom-info-window-body {
+    padding: 14px;
+  }
+  
+  .custom-info-window-opening-hours,
+  .custom-info-window-free-entry,
+  .custom-info-window-fun-fact {
+    padding: 10px;
+    border-radius: 8px;
+  }
+}

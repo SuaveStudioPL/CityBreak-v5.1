@@ -1,0 +1,28 @@
+/* Style dla kontrolek mapy Google */
+
+/* Ukrycie przycisku "Sterowanie kamerą na mapie" */
+.gm-control-active[title="Sterowanie kamerą na mapie"],
+.gm-control-active[title="Toggle tilt"],
+.gm-control-active[title="Drag Pegman onto the map to open Street View"],
+.gm-svpc {
+  display: none !important;
+}
+
+/* Przesunięcie przycisków powiększania i pomniejszania o około 2 cm wyżej */
+.gm-bundled-control,
+.gm-bundled-control-on-bottom {
+  transform: translateY(-2cm) !important;
+}
+
+/* Alternatywny selektor dla przycisków powiększania/pomniejszania */
+.gmnoprint[data-control-width="40"][data-control-height="81"] {
+  transform: translateY(-2cm) !important;
+}
+
+/* Dodatkowy selektor dla przycisków + i - */
+.gm-control-active[title="Powiększ"],
+.gm-control-active[title="Pomniejsz"],
+.gm-control-active[title="Zoom in"],
+.gm-control-active[title="Zoom out"] {
+  transform: translateY(-2cm) !important;
+}

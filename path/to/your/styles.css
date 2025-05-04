@@ -1,0 +1,21 @@
+/* Definicja animacji pulsowania */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15); /* Lekkie powiększenie */
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Klasa CSS dla pulsującego markera */
+.pulsing-marker .leaflet-marker-icon {
+  animation: pulse 1.5s infinite ease-in-out; /* Zastosowanie animacji */
+  transform-origin: center center; /* Upewnij się, że skalowanie jest od środka */
+}

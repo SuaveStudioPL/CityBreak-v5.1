@@ -1,0 +1,168 @@
+/* Style dla popup */
+.attraction-popup .leaflet-popup-content-wrapper {
+  background-color: #1f2937;
+  color: white;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.attraction-popup .leaflet-popup-content {
+  margin: 0;
+  width: 280px !important;
+}
+
+.attraction-popup .leaflet-popup-tip {
+  background-color: #1f2937;
+}
+
+.attraction-popup .attraction-popup-content {
+  padding: 12px;
+}
+
+.attraction-popup h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.attraction-popup p {
+  margin: 0;
+  font-size: 14px;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+/* Stylizacja kontrolek zoom */
+.leaflet-control-zoom {
+  display: none; /* Ukryjemy domyślne kontrolki, bo mamy własne */
+}
+
+/* Dodatkowe style dla markerów i ikon */
+.custom-div-icon {
+  background: none;
+  border: none;
+}
+
+/* Stylizacja przycisku pobierania informacji o transporcie */
+.transport-button {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  margin-top: 10px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.transport-button:hover {
+  background-color: #2563eb;
+}
+
+/* Stylizacja przycisków zoom */
+.zoom-control-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.zoom-control-button:hover {
+  background-color: #374151;
+}
+
+/* Styles for default Leaflet transit/walking popups */
+.leaflet-popup-content-wrapper {
+  background-color: #2d3748; /* Dark background (adjust as needed) */
+  color: #e2e8f0; /* Light text */
+  border-radius: 6px; /* Slightly smaller radius */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 0; /* Remove default padding */
+  overflow: hidden; /* Ensure content respects padding */
+}
+
+.leaflet-popup-content {
+  margin: 0 !important; /* Override default margin */
+  padding: 8px 12px; /* Add custom padding */
+  line-height: 1.3; /* Reduce line spacing globally */
+  font-size: 13px; /* Slightly smaller base font */
+  max-width: 320px !important; /* Further increased width */
+  width: auto !important; /* Allow shrinking */
+}
+
+.leaflet-popup-tip-container {
+  width: 30px; /* Adjust tip size if needed */
+  height: 15px;
+}
+
+.leaflet-popup-tip {
+  background-color: #2d3748; /* Match background */
+  box-shadow: none;
+}
+
+/* Style content inside the popup */
+.leaflet-popup-content h4 {
+  font-weight: bold; /* Ensure boldness */
+  margin: 0 0 4px 0; /* Reduced bottom margin */
+  font-size: 14px; /* Keep header slightly larger */
+  color: #ffffff; /* Brighter color for header */
+}
+
+.leaflet-popup-content p {
+  margin: 0 0 3px 0; /* Reduced bottom margin for paragraphs */
+  line-height: 1.25; /* Further reduce line height for paragraphs */
+  color: #cbd5e0; /* Slightly dimmer text for details */
+  white-space: nowrap; /* Prevent wrapping for From/To lines */
+  overflow: hidden; /* Hide overflow if text overflows */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+/* Remove margin from the last paragraph */
+.leaflet-popup-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Styles for the inner span of the public transit icon */
+.public-transit-step-icon > span {
+  display: inline-block;
+  min-width: 30px; /* Ensure a minimum width */
+  text-align: center; /* Center text within the span */
+  background-color: black;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap; /* Prevent text wrapping */
+  line-height: normal;
+  vertical-align: middle;
+}
+
+/* Ensure no styles target the outer .public-transit-step-icon container */
+
+/* --- Added Styles --- */
+
+/* Ensure the inner div of the transit marker is styled as intended */
+/* The inline styles should be sufficient, but this selector is available if needed */
+/* .transit-route-marker > div { } */
+
+#leaflet-map {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
