@@ -5,6 +5,7 @@ import './map/LeafletStyles.css';
 import { Coordinates, Attraction, RouteSegment, JourneyStep } from '../types/attractions'; // Import correct types
 import { getIcon } from '../utils/markerIcons';
 import { createUserLocationIcon, createWalkingIcon } from '../utils/locationIcons';
+import { getCustomMapTileUrl, getFallbackMapTileUrl, getPrimaryMapTileUrl, getCustomMapStyleJsonUrl, mapTilerOptions, PRIMARY_MAP_STYLE, OUTDOOR_STYLE } from './MapTilerConfig';
 // Removed unused imports: useAppContext, getCityByName, CityData
 
 // Unused icon imports removed
@@ -182,10 +183,43 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     map.createPane('publicTransportPane');
     map.getPane('publicTransportPane')!.style.zIndex = '550';
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 19
-    }).addTo(map);
+    // Use the streets-v2 style as requested
+    try {
+      console.log(`Using ${PRIMARY_MAP_STYLE} style as requested`);
+      const primaryLayer = L.tileLayer(getPrimaryMapTileUrl(), mapTilerOptions);
+
+      // Add error handling
+      primaryLayer.on('tileerror', (primaryError) => {
+        console.error(`Error loading ${PRIMARY_MAP_STYLE} style, trying outdoor style`, primaryError);
+        primaryLayer.remove();
+
+        // Try outdoor style
+        console.log('Trying outdoor style');
+        const outdoorLayer = L.tileLayer(
+          `https://api.maptiler.com/maps/${OUTDOOR_STYLE}/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`,
+          mapTilerOptions
+        );
+
+        outdoorLayer.on('tileerror', (outdoorError) => {
+          console.error('Error loading outdoor style, using fallback', outdoorError);
+          outdoorLayer.remove();
+
+          // Use fallback as last resort
+          console.log('Using fallback style');
+          L.tileLayer(getFallbackMapTileUrl(), mapTilerOptions).addTo(map);
+        });
+
+        outdoorLayer.addTo(map);
+      });
+
+      // Add the primary layer to the map
+      primaryLayer.addTo(map);
+    } catch (error) {
+      console.error('Error setting up map tiles, using fallback', error);
+
+      // Use fallback in case of any errors
+      L.tileLayer(getFallbackMapTileUrl(), mapTilerOptions).addTo(map);
+    }
 
     // Ensure the attribution control is visible above bottom panels
     map.attributionControl.setPosition('topright');

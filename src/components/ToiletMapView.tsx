@@ -7,6 +7,7 @@ import { Toilet, getPublicToilets, getWalkingDirectionsToToilet } from '../servi
 import ToiletInfoWindow from './ToiletInfoWindow';
 import { getCityCoordinates } from '../services/WeatherService';
 import { useAppContext } from '../context/AppContext'; // Import useAppContext
+import { getCustomMapTileUrl, getFallbackMapTileUrl, getPrimaryMapTileUrl, getCustomMapStyleJsonUrl, mapTilerOptions, PRIMARY_MAP_STYLE, OUTDOOR_STYLE } from './MapTilerConfig';
 
 // Manually import Leaflet icons to fix webpack issues
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -142,10 +143,43 @@ const ToiletMapView: React.FC<ToiletMapViewProps> = ({ city, userLocation }) => 
       map.createPane('toiletMarkersPane');
       map.getPane('toiletMarkersPane')!.style.zIndex = '800';
 
-      // Add OpenStreetMap tile layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+      // Use the streets-v2 style as requested
+      try {
+        console.log(`ToiletMapView: Using ${PRIMARY_MAP_STYLE} style as requested`);
+        const primaryLayer = L.tileLayer(getPrimaryMapTileUrl(), mapTilerOptions);
+
+        // Add error handling
+        primaryLayer.on('tileerror', (primaryError) => {
+          console.error(`ToiletMapView: Error loading ${PRIMARY_MAP_STYLE} style, trying outdoor style`, primaryError);
+          primaryLayer.remove();
+
+          // Try outdoor style
+          console.log('ToiletMapView: Trying outdoor style');
+          const outdoorLayer = L.tileLayer(
+            `https://api.maptiler.com/maps/${OUTDOOR_STYLE}/{z}/{x}/{y}.png?key=${MAPTILER_API_KEY}`,
+            mapTilerOptions
+          );
+
+          outdoorLayer.on('tileerror', (outdoorError) => {
+            console.error('ToiletMapView: Error loading outdoor style, using fallback', outdoorError);
+            outdoorLayer.remove();
+
+            // Use fallback as last resort
+            console.log('ToiletMapView: Using fallback style');
+            L.tileLayer(getFallbackMapTileUrl(), mapTilerOptions).addTo(map);
+          });
+
+          outdoorLayer.addTo(map);
+        });
+
+        // Add the primary layer to the map
+        primaryLayer.addTo(map);
+      } catch (error) {
+        console.error('Error setting up map tiles in ToiletMapView, using fallback', error);
+
+        // Use fallback in case of any errors
+        L.tileLayer(getFallbackMapTileUrl(), mapTilerOptions).addTo(map);
+      }
 
       // Create layer group for toilet markers
       toiletMarkersRef.current = L.layerGroup([], { pane: 'toiletMarkersPane' }).addTo(map);
