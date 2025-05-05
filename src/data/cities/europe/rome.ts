@@ -28,10 +28,12 @@ export const romeAttractions: Attraction[] = [
   },
   {
     id: '4',
-    name: 'Via Condotti',
-    description: 'A prestigious street in Rome, renowned for its high-end fashion boutiques, luxury shops, and historical significance. Located near the Spanish Steps, it has been a hub for the elite and a symbol of Italian elegance. It is said that it was once a simple path leading to the Tiber River.',
-    coordinates: { lat: 41.9051, lng: 12.4805},
-    category: 'shopping'
+    name: 'Pantheon, Rome',
+    description: 'An ancient Roman temple, now a church (Basilica di Santa Maria ad Martyres), commissioned by Marcus Agrippa and rebuilt by Emperor Hadrian. Its massive dome, with an oculus at the center, is an architectural marvel. It has been in continuous use since its construction. It is said that it was built on the site where Romulus ascended to heaven.',
+    coordinates: { lat: 41.8986, lng: 12.4769 },
+    openingHours: 'Daily 9:00 - 19:00 (last entry ~18:30). Closed Jan 1, Aug 15, Dec 25. Restricted during mass.',
+    freeEntryInfo: 'Requires paid ticket (since July 2023). Free 1st Sunday of month.',
+    category: 'landmark'
   },
   {
     id: '5',
@@ -44,12 +46,10 @@ export const romeAttractions: Attraction[] = [
   },
   {
     id: '6',
-    name: 'Pantheon, Rome',
-    description: 'An ancient Roman temple, now a church (Basilica di Santa Maria ad Martyres), commissioned by Marcus Agrippa and rebuilt by Emperor Hadrian. Its massive dome, with an oculus at the center, is an architectural marvel. It has been in continuous use since its construction. It is said that it was built on the site where Romulus ascended to heaven.',
-    coordinates: { lat: 41.8986, lng: 12.4769 },
-    openingHours: 'Daily 9:00 - 19:00 (last entry ~18:30). Closed Jan 1, Aug 15, Dec 25. Restricted during mass.',
-    freeEntryInfo: 'Requires paid ticket (since July 2023). Free 1st Sunday of month.',
-    category: 'landmark'
+    name: 'Via Condotti',
+    description: 'A prestigious street in Rome, renowned for its high-end fashion boutiques, luxury shops, and historical significance. Located near the Spanish Steps, it has been a hub for the elite and a symbol of Italian elegance. It is said that it was once a simple path leading to the Tiber River.',
+    coordinates: { lat: 41.9051, lng: 12.4805},
+    category: 'shopping'
   },
   {
     id: '7',
@@ -108,10 +108,11 @@ export const romeAttractions: Attraction[] = [
   },
   {
     id: '14',
-    name: 'Appian Way',
-    description: 'One of the earliest and most strategically important Roman roads of the ancient republic. It connected Rome to Brindisi in southern Italy. Today, parts of the ancient road and its surrounding monuments, including tombs and catacombs, can be explored. It is said that it was named after Appius Claudius Caecus, who began its construction.',
-    coordinates: { lat: 41.8524, lng: 12.5517 },
-    category: 'historic'
+    name: 'Victor Emmanuel II Monument',
+    description: 'An imposing national monument built in honor of Victor Emmanuel II, the first king of unified Italy. Also known as the Altare della Patria (Altar of the Fatherland), this grand white marble building dominates Piazza Venezia. Completed in 1925, it features grand stairways, Corinthian columns, fountains, and an equestrian statue of the king. The terrace offers panoramic views of Rome. It houses the Tomb of the Unknown Soldier with an eternal flame.',
+    coordinates: { lat: 41.8947, lng: 12.4832 },
+    openingHours: 'Daily 9:30 - 19:30 (last entry 18:45). Elevator to panoramic terrace: 9:30 - 19:00.',
+    category: 'landmark'
   },
   {
     id: '15',
