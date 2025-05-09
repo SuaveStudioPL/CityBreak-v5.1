@@ -1463,6 +1463,33 @@ export const cityMetadataMap = new Map<string, CityMetadata>([
       timezone: 'Asia/Jerusalem',
     },
   ],
+  [
+    'jerusalem',
+    {
+      key: 'jerusalem',
+      name: 'Jerusalem',
+      country: 'Israel',
+      description: 'One of the world\'s oldest and holiest cities, sacred to Judaism, Christianity, and Islam, with a rich history spanning thousands of years.',
+      image: '', // Placeholder
+      coordinates: { lat: 31.7683, lng: 35.2137 },
+      zoom: 13,
+      timezone: 'Asia/Jerusalem',
+    },
+  ],
+  // Duplicate entry with different case to ensure it's found
+  [
+    'Jerusalem',
+    {
+      key: 'Jerusalem',
+      name: 'Jerusalem',
+      country: 'Israel',
+      description: 'One of the world\'s oldest and holiest cities, sacred to Judaism, Christianity, and Islam, with a rich history spanning thousands of years.',
+      image: '', // Placeholder
+      coordinates: { lat: 31.7683, lng: 35.2137 },
+      zoom: 13,
+      timezone: 'Asia/Jerusalem',
+    },
+  ],
 
 ]);
 

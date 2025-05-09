@@ -119,6 +119,7 @@ import { wellingtonAttractions } from './cities/australia/wellington';
 
 // Africa cities
 import { telavivAttractions } from './cities/africa/telaviv';
+import { jerusalemAttractions } from './cities/africa/jerusalem';
 
 
 export const attractions: { [key: string]: Attraction[] } = {
@@ -241,5 +242,6 @@ export const attractions: { [key: string]: Attraction[] } = {
   'Wellington': wellingtonAttractions,
 
   // Africa cities
-  'Tel Aviv': telavivAttractions
+  'Tel Aviv': telavivAttractions,
+  'Jerusalem': jerusalemAttractions
 };

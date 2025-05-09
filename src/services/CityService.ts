@@ -41,6 +41,14 @@ export async function getAvailableCities(): Promise<CityData[]> {
     const northAmericaModules = import.meta.glob('../data/cities/northamerica/*.{ts,js}') as Record<string, () => Promise<any>>;
     const southAmericaModules = import.meta.glob('../data/cities/southamerica/*.{ts,js}') as Record<string, () => Promise<any>>;
 
+    // Log the found modules for each continent
+    console.log('Europe modules:', Object.keys(europeModules));
+    console.log('Asia modules:', Object.keys(asiaModules));
+    console.log('Africa modules:', Object.keys(africaModules));
+    console.log('Australia modules:', Object.keys(australiaModules));
+    console.log('North America modules:', Object.keys(northAmericaModules));
+    console.log('South America modules:', Object.keys(southAmericaModules));
+
     // Combine all modules
     const attractionModules = {
       ...europeModules,

@@ -132,6 +132,14 @@ export const continents: Continent[] = [
     ]
   },
   {
+    key: 'africa',
+    name: 'Africa',
+    cities: [
+      'Tel Aviv',
+      'Jerusalem'
+    ]
+  },
+  {
     key: 'australia',
     name: 'Australia & Oceania',
     cities: [

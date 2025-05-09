@@ -18,9 +18,13 @@ export const CitySelector: React.FC = () => {
         console.log("Clearing cities cache to force reload");
         clearCitiesCache();
 
+        // Add a small delay to ensure cache is cleared
+        await new Promise(resolve => setTimeout(resolve, 100));
+
         const cities = await getAvailableCities();
         const cityNames = cities.map(city => city.name);
         console.log("City options loaded:", cityNames);
+        console.log("Looking for Jerusalem in loaded cities:", cityNames.includes('Jerusalem'));
 
         // Check if The Hague is in the list
         const hasTheHague = cityNames.includes('The Hague');
@@ -36,6 +40,16 @@ export const CitySelector: React.FC = () => {
         if (!hasTheHague) {
           console.log("Adding 'The Hague' manually to the list");
           cityNames.push('The Hague');
+        }
+
+        // Check if Jerusalem is in the list
+        const hasJerusalem = cityNames.includes('Jerusalem');
+        console.log("Is 'Jerusalem' in the list?", hasJerusalem);
+
+        // Add Jerusalem manually if it's not in the list
+        if (!hasJerusalem) {
+          console.log("Adding 'Jerusalem' manually to the list");
+          cityNames.push('Jerusalem');
         }
 
         // Sort the city names alphabetically

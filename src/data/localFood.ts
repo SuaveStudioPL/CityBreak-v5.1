@@ -75,7 +75,20 @@ import { brugesFood } from './localFood/bruges';
 import { antwerpFood } from './localFood/antwerp';
 import { rotterdamFood } from './localFood/rotterdam';
 import { thehagueFood } from './localFood/thehague';
-
+import { telavivFood } from './localFood/telaviv';
+import { jerusalemFood } from './localFood/jerusalem';
+import { perthFood } from './localFood/perth';
+import { melbourneFood } from './localFood/melbourne';
+import { sydneyFood } from './localFood/sydney';
+import { aucklandFood } from './localFood/auckland';
+import { wellingtonFood } from './localFood/wellington';
+import { santiagoFood } from './localFood/santiago';
+import { cartagenaFood } from './localFood/cartagena';
+import { limaFood } from './localFood/lima';
+import { quitoFood } from './localFood/quito';
+import { medellinFood } from './localFood/medellin';
+import { bogotaFood } from './localFood/bogota';
+import { buenosairesFood } from './localFood/buenosaires';
 
 
 // Asian cities
@@ -179,6 +192,20 @@ export const localFood: Record<string, LocalFood[]> = {
   Antwerp: antwerpFood,
   Rotterdam: rotterdamFood,
   'The Hague': thehagueFood,
+  'Tel Aviv': telavivFood,
+  Jerusalem: jerusalemFood,
+  Perth: perthFood,
+  Melbourne: melbourneFood,
+  Sydney: sydneyFood,
+  Auckland: aucklandFood,
+  Wellington: wellingtonFood,
+  Santiago: santiagoFood,
+  Cartagena: cartagenaFood,
+  Lima: limaFood,
+  Quito: quitoFood,
+  Medellin: medellinFood,
+  Bogota: bogotaFood,
+  'Buenos Aires': buenosairesFood,
 
   // Asian cities
   Dubai: dubaiFood,

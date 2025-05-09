@@ -116,6 +116,7 @@ import { wellingtonAttractions } from './cities/australia/wellington';
 
 // Africa cities
 import { telavivAttractions } from './cities/africa/telaviv';
+import { jerusalemAttractions } from './cities/africa/jerusalem';
 
 /**
  * Collection of all available cities and their tourist information
@@ -238,7 +239,8 @@ export const cities = {
   wellington: wellingtonAttractions,
 
   // Africa cities
-  telaviv: telavivAttractions
+  telaviv: telavivAttractions,
+  jerusalem: jerusalemAttractions
 };
 
 /**
