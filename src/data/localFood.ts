@@ -66,6 +66,15 @@ import { thessalonikiFood } from './localFood/thessaloniki';
 import { tiranaFood } from './localFood/tirana';
 import { zagrebFood } from './localFood/zagreb';
 import { reykjavikFood } from './localFood/reykjavik';
+import { havanaFood } from './localFood/havana';
+import { skopjeFood } from './localFood/skopje';
+import { monacoFood } from './localFood/monaco';
+import { podgoricaFood } from './localFood/podgorica';
+import { ljubljanaFood } from './localFood/ljubljana';
+import { brugesFood } from './localFood/bruges';
+import { antwerpFood } from './localFood/antwerp';
+import { rotterdamFood } from './localFood/rotterdam';
+import { thehagueFood } from './localFood/thehague';
 
 
 
@@ -161,6 +170,15 @@ export const localFood: Record<string, LocalFood[]> = {
   Thessaloniki: thessalonikiFood,
   Reykjavik: reykjavikFood,
   Tirana: tiranaFood,
+  Havana: havanaFood,
+  Skopje: skopjeFood,
+  Monaco: monacoFood,
+  Podgorica: podgoricaFood,
+  Ljubljana: ljubljanaFood,
+  Bruges: brugesFood,
+  Antwerp: antwerpFood,
+  Rotterdam: rotterdamFood,
+  'The Hague': thehagueFood,
 
   // Asian cities
   Dubai: dubaiFood,

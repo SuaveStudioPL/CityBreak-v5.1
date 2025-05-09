@@ -63,6 +63,14 @@ import { thessalonikiAttractions } from './cities/europe/thessaloniki';
 import { zagrebAttractions } from './cities/europe/zagreb';
 import { reykjavikAttractions } from './cities/europe/reykjavik';
 import { tiranaAttractions } from './cities/europe/tirana';
+import { skopjeAttractions } from './cities/europe/skopje';
+import { monacoAttractions } from './cities/europe/monaco';
+import { podgoricaAttractions } from './cities/europe/podgorica';
+import { ljubljanaAttractions } from './cities/europe/ljubljana';
+import { brugesAttractions } from './cities/europe/bruges';
+import { antwerpAttractions } from './cities/europe/antwerp';
+import { rotterdamAttractions } from './cities/europe/rotterdam';
+import { theHagueAttractions } from './cities/europe/thehague';
 
 // Asian cities
 import { dubaiAttractions } from './cities/asia/dubai';
@@ -88,6 +96,26 @@ import { ottawaAttractions } from './cities/northamerica/ottawa';
 import { sanfranciscoAttractions } from './cities/northamerica/sanfrancisco';
 import { washingtonAttractions } from './cities/northamerica/washington';
 import { montrealAttractions } from './cities/northamerica/montreal';
+import { havanaAttractions } from './cities/northamerica/havana';
+
+// South America cities
+import { santiagoAttractions } from './cities/southamerica/santiago';
+import { cartagenaAttractions } from './cities/southamerica/cartagena';
+import { limaAttractions } from './cities/southamerica/lima';
+import { quitoAttractions } from './cities/southamerica/quito';
+import { medellinAttractions } from './cities/southamerica/medellin';
+import { bogotaAttractions } from './cities/southamerica/bogota';
+import { buenosAiresAttractions } from './cities/southamerica/buenosAires';
+
+// Australia cities
+import { perthAttractions } from './cities/australia/perth';
+import { melbourneAttractions } from './cities/australia/melbourne';
+import { sydneyAttractions } from './cities/australia/sydney';
+import { aucklandAttractions } from './cities/australia/auckland';
+import { wellingtonAttractions } from './cities/australia/wellington';
+
+// Africa cities
+import { telavivAttractions } from './cities/africa/telaviv';
 
 /**
  * Collection of all available cities and their tourist information
@@ -158,6 +186,14 @@ export const cities = {
   zagreb: zagrebAttractions,
   reykjavik: reykjavikAttractions,
   tirana: tiranaAttractions,
+  skopje: skopjeAttractions,
+  monaco: monacoAttractions,
+  podgorica: podgoricaAttractions,
+  ljubljana: ljubljanaAttractions,
+  bruges: brugesAttractions,
+  antwerp: antwerpAttractions,
+  rotterdam: rotterdamAttractions,
+  thehague: theHagueAttractions,
 
   // Asian cities
   dubai: dubaiAttractions,
@@ -182,7 +218,27 @@ export const cities = {
   ottawa: ottawaAttractions,
   sanfrancisco: sanfranciscoAttractions,
   washington: washingtonAttractions,
-  montreal: montrealAttractions
+  montreal: montrealAttractions,
+  havana: havanaAttractions,
+
+  // South America cities
+  santiago: santiagoAttractions,
+  cartagena: cartagenaAttractions,
+  lima: limaAttractions,
+  quito: quitoAttractions,
+  medellin: medellinAttractions,
+  bogota: bogotaAttractions,
+  buenosaires: buenosAiresAttractions,
+
+  // Australia cities
+  perth: perthAttractions,
+  melbourne: melbourneAttractions,
+  sydney: sydneyAttractions,
+  auckland: aucklandAttractions,
+  wellington: wellingtonAttractions,
+
+  // Africa cities
+  telaviv: telavivAttractions
 };
 
 /**

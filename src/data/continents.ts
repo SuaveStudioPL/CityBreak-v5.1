@@ -73,7 +73,15 @@ export const continents: Continent[] = [
       'Vilnius',
       'Warsaw',
       'Zagreb',
-      'Zurich'
+      'Zurich',
+      'Skopje',
+      'Monaco',
+      'Podgorica',
+      'Ljubljana',
+      'Bruges',
+      'Antwerp',
+      'Rotterdam',
+      'The Hague'
     ]
   },
   {
@@ -106,7 +114,32 @@ export const continents: Continent[] = [
       'Ottawa',
       'San Francisco',
       'Washington',
-      'Montreal'
+      'Montreal',
+      'Havana'
+    ]
+  },
+  {
+    key: 'southamerica',
+    name: 'South America',
+    cities: [
+      'Santiago',
+      'Cartagena',
+      'Lima',
+      'Quito',
+      'Medellin',
+      'Bogota',
+      'Buenos Aires'
+    ]
+  },
+  {
+    key: 'australia',
+    name: 'Australia & Oceania',
+    cities: [
+      'Perth',
+      'Melbourne',
+      'Sydney',
+      'Auckland',
+      'Wellington'
     ]
   }
 ];

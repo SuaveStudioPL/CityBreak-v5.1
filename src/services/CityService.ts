@@ -67,6 +67,7 @@ export async function getAvailableCities(): Promise<CityData[]> {
         }
 
         const cityKey = fileNameMatch[1]; // e.g., 'warsaw'
+        console.log(`Processing city from file: ${path}, extracted key: ${cityKey}`);
 
         // Check if already cached
         if (citiesCache.has(cityKey)) {
@@ -79,10 +80,22 @@ export async function getAvailableCities(): Promise<CityData[]> {
           console.error(`Metadata not found for city key: ${cityKey}. Ensure it exists in cityMetadata.ts`);
           return null;
         }
+        console.log(`Found metadata for ${cityKey}: ${metadata.name}`);
 
         // --- Load Attractions ---
         const attractionModule = await loadAttractions();
-        const attractionsKey = `${cityKey}Attractions`; // e.g., warsawAttractions
+
+        // Special handling for thehague
+        let attractionsKey = `${cityKey}Attractions`; // e.g., warsawAttractions
+
+        // Log available exports in the module for debugging
+        console.log(`Available exports in module ${path}:`, Object.keys(attractionModule));
+
+        if (cityKey === 'thehague' && !attractionModule[attractionsKey] && attractionModule['theHagueAttractions']) {
+          console.log(`Using 'theHagueAttractions' instead of '${attractionsKey}' for The Hague`);
+          attractionsKey = 'theHagueAttractions';
+        }
+
         if (!attractionModule[attractionsKey] || !Array.isArray(attractionModule[attractionsKey])) {
           console.error(`Attractions export '${attractionsKey}' not found or not an array in module: ${path}`);
           return null;
@@ -111,6 +124,9 @@ export async function getAvailableCities(): Promise<CityData[]> {
     // Sort cities alphabetically
     const sortedCities = cities.sort((a, b) => a.name.localeCompare(b.name));
 
+    // Log all loaded cities for debugging
+    console.log("Loaded cities:", sortedCities.map(city => city.name));
+
     // Update cache state
     availableCitiesArray = sortedCities;
     allCitiesLoaded = true;
@@ -130,7 +146,39 @@ export async function getAvailableCities(): Promise<CityData[]> {
  */
 export async function getCityByName(cityName: string): Promise<CityData | undefined> {
   const cities = await getAvailableCities();
-  return cities.find(city => city.name === cityName);
+  console.log(`Searching for city: "${cityName}" among ${cities.length} cities`);
+
+  // Normalize the search term (lowercase, remove spaces)
+  const normalizedSearch = cityName.toLowerCase().replace(/\s+/g, '');
+
+  // First try exact match
+  let foundCity = cities.find(city => city.name === cityName);
+
+  // If not found, try case-insensitive match
+  if (!foundCity) {
+    foundCity = cities.find(city => city.name.toLowerCase() === cityName.toLowerCase());
+  }
+
+  // If still not found, try more flexible matching (ignoring spaces)
+  if (!foundCity) {
+    foundCity = cities.find(city => city.name.toLowerCase().replace(/\s+/g, '') === normalizedSearch);
+  }
+
+  // If still not found, try partial match
+  if (!foundCity) {
+    foundCity = cities.find(city =>
+      city.name.toLowerCase().includes(cityName.toLowerCase()) ||
+      cityName.toLowerCase().includes(city.name.toLowerCase())
+    );
+  }
+
+  if (foundCity) {
+    console.log(`Found city: ${foundCity.name}`);
+  } else {
+    console.log(`City not found: ${cityName}`);
+  }
+
+  return foundCity;
 }
 
 /**

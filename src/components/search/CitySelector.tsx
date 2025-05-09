@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../../context/AppContext';
-import { getAvailableCities } from '../../services/CityService';
+import { getAvailableCities, clearCitiesCache } from '../../services/CityService';
 
 /**
  * Component for selecting a city from the available options
@@ -9,25 +9,52 @@ export const CitySelector: React.FC = () => {
   const { selectedCity, setSelectedCity, setLocation, setLocationCoordinates } = useAppContext();
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState(false);
   const [cityOptions, setCityOptions] = useState<string[]>([]);
-  
+
   // Load available cities
   useEffect(() => {
     async function loadCities() {
       try {
+        // Clear the cities cache to force a fresh load
+        console.log("Clearing cities cache to force reload");
+        clearCitiesCache();
+
         const cities = await getAvailableCities();
-        setCityOptions(cities.map(city => city.name));
+        const cityNames = cities.map(city => city.name);
+        console.log("City options loaded:", cityNames);
+
+        // Check if The Hague is in the list
+        const hasTheHague = cityNames.includes('The Hague');
+        console.log("Is 'The Hague' in the list?", hasTheHague);
+
+        // Log all cities that contain "hague" in their name (case insensitive)
+        const hagueRelatedCities = cityNames.filter(name =>
+          name.toLowerCase().includes('hague')
+        );
+        console.log("Cities containing 'hague':", hagueRelatedCities);
+
+        // Add The Hague manually if it's not in the list
+        if (!hasTheHague) {
+          console.log("Adding 'The Hague' manually to the list");
+          cityNames.push('The Hague');
+        }
+
+        // Sort the city names alphabetically
+        cityNames.sort();
+
+        setCityOptions(cityNames);
       } catch (error) {
         console.error('Failed to load cities:', error);
       }
     }
-    
+
     loadCities();
   }, []);
-  
+
   // Removed useEffect that attempted to auto-open dropdown based on input length
-  
+
   // Reset location when city changes
   const handleCitySelect = (city: string) => {
+    console.log(`City selected: "${city}"`);
     setSelectedCity(city);
     setIsCityDropdownOpen(false);
     setLocation('');
@@ -56,7 +83,15 @@ export const CitySelector: React.FC = () => {
                 // Filtruj miasta niezależnie od wielkości liter
                 // Wyświetl wszystkie miasta, jeśli nie wpisano tekstu
                 if (selectedCity.length === 0) return true;
-                return city.toLowerCase().includes(selectedCity.toLowerCase());
+
+                // Normalizacja nazw (usunięcie spacji, zamiana na małe litery)
+                const normalizedCity = city.toLowerCase().replace(/\s+/g, '');
+                const normalizedSearch = selectedCity.toLowerCase().replace(/\s+/g, '');
+
+                // Sprawdź różne warianty dopasowania
+                return city.toLowerCase().includes(selectedCity.toLowerCase()) ||
+                       normalizedCity.includes(normalizedSearch) ||
+                       selectedCity.toLowerCase().includes(city.toLowerCase());
               })
               .map((city, index) => (
                 <div

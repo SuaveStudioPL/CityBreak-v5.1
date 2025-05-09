@@ -1174,6 +1174,295 @@ export const cityMetadataMap = new Map<string, CityMetadata>([
       timezone: 'America/Mexico_City',
     },
   ],
+  [
+    'havana',
+    {
+      key: 'havana',
+      name: 'Havana',
+      country: 'Cuba',
+      description: 'The capital of Cuba, known for its colorful colonial architecture, vintage cars, and vibrant culture.',
+      image: '', // Placeholder
+      coordinates: { lat: 23.1136, lng: -82.3666 },
+      zoom: 13,
+      timezone: 'America/Havana',
+    },
+  ],
+  [
+    'skopje',
+    {
+      key: 'skopje',
+      name: 'Skopje',
+      country: 'North Macedonia',
+      description: 'The capital of North Macedonia, known for its Ottoman and Byzantine architecture, stone bridge, and fortress.',
+      image: '', // Placeholder
+      coordinates: { lat: 41.9973, lng: 21.4280 },
+      zoom: 13,
+      timezone: 'Europe/Skopje',
+    },
+  ],
+  [
+    'monaco',
+    {
+      key: 'monaco',
+      name: 'Monaco',
+      country: 'Monaco',
+      description: 'A sovereign city-state on the French Riviera, known for its luxury casinos, yacht-lined harbor, and prestigious Grand Prix.',
+      image: '', // Placeholder
+      coordinates: { lat: 43.7384, lng: 7.4246 },
+      zoom: 15,
+      timezone: 'Europe/Monaco',
+    },
+  ],
+  [
+    'podgorica',
+    {
+      key: 'podgorica',
+      name: 'Podgorica',
+      country: 'Montenegro',
+      description: 'The capital of Montenegro, known for its modern architecture, Ottoman old town, and nearby natural attractions.',
+      image: '', // Placeholder
+      coordinates: { lat: 42.4304, lng: 19.2594 },
+      zoom: 13,
+      timezone: 'Europe/Podgorica',
+    },
+  ],
+  [
+    'ljubljana',
+    {
+      key: 'ljubljana',
+      name: 'Ljubljana',
+      country: 'Slovenia',
+      description: 'The capital of Slovenia, known for its green spaces, baroque facades, and iconic Triple Bridge.',
+      image: '', // Placeholder
+      coordinates: { lat: 46.0569, lng: 14.5058 },
+      zoom: 13,
+      timezone: 'Europe/Ljubljana',
+    },
+  ],
+  [
+    'bruges',
+    {
+      key: 'bruges',
+      name: 'Bruges',
+      country: 'Belgium',
+      description: 'A medieval city in Belgium known for its canals, cobbled streets, and well-preserved Gothic architecture.',
+      image: '', // Placeholder
+      coordinates: { lat: 51.2093, lng: 3.2247 },
+      zoom: 14,
+      timezone: 'Europe/Brussels',
+    },
+  ],
+  [
+    'antwerp',
+    {
+      key: 'antwerp',
+      name: 'Antwerp',
+      country: 'Belgium',
+      description: 'A port city in Belgium known for its diamond district, Renaissance architecture, and fashion scene.',
+      image: '', // Placeholder
+      coordinates: { lat: 51.2194, lng: 4.4025 },
+      zoom: 13,
+      timezone: 'Europe/Brussels',
+    },
+  ],
+  [
+    'rotterdam',
+    {
+      key: 'rotterdam',
+      name: 'Rotterdam',
+      country: 'Netherlands',
+      description: 'A major port city in the Netherlands known for its bold, modern architecture and maritime heritage.',
+      image: '', // Placeholder
+      coordinates: { lat: 51.9244, lng: 4.4777 },
+      zoom: 13,
+      timezone: 'Europe/Amsterdam',
+    },
+  ],
+  [
+    'thehague',
+    {
+      key: 'thehague',
+      name: 'The Hague',
+      country: 'Netherlands',
+      description: 'The administrative and royal capital of the Netherlands, known for its International Court of Justice and historic government buildings.',
+      image: '', // Placeholder
+      coordinates: { lat: 52.0705, lng: 4.3007 },
+      zoom: 13,
+      timezone: 'Europe/Amsterdam',
+    },
+  ],
+  // South America cities
+  [
+    'santiago',
+    {
+      key: 'santiago',
+      name: 'Santiago',
+      country: 'Chile',
+      description: 'The capital and largest city of Chile, nestled in a valley surrounded by the snow-capped Andes and the Chilean Coast Range.',
+      image: '', // Placeholder
+      coordinates: { lat: -33.4489, lng: -70.6693 },
+      zoom: 12,
+      timezone: 'America/Santiago',
+    },
+  ],
+  [
+    'cartagena',
+    {
+      key: 'cartagena',
+      name: 'Cartagena',
+      country: 'Colombia',
+      description: 'A historic port city on Colombia\'s Caribbean coast, known for its colonial walled city, colorful buildings, and vibrant culture.',
+      image: '', // Placeholder
+      coordinates: { lat: 10.4225, lng: -75.5392 },
+      zoom: 13,
+      timezone: 'America/Bogota',
+    },
+  ],
+  [
+    'lima',
+    {
+      key: 'lima',
+      name: 'Lima',
+      country: 'Peru',
+      description: 'The capital of Peru, known for its colonial architecture, museums, and renowned food scene.',
+      image: '', // Placeholder
+      coordinates: { lat: -12.051389, lng: -77.043056 },
+      zoom: 12,
+      timezone: 'America/Lima',
+    },
+  ],
+  [
+    'quito',
+    {
+      key: 'quito',
+      name: 'Quito',
+      country: 'Ecuador',
+      description: 'The capital of Ecuador, situated high in the Andean foothills, known for its well-preserved colonial center and stunning mountain views.',
+      image: '', // Placeholder
+      coordinates: { lat: -0.22, lng: -78.512083 },
+      zoom: 12,
+      timezone: 'America/Guayaquil',
+    },
+  ],
+  [
+    'medellin',
+    {
+      key: 'medellin',
+      name: 'Medellin',
+      country: 'Colombia',
+      description: 'A city in Colombia known for its innovation, spring-like climate, and transformation from a troubled past to a vibrant cultural center.',
+      image: '', // Placeholder
+      coordinates: { lat: 6.250556, lng: -75.568056 },
+      zoom: 12,
+      timezone: 'America/Bogota',
+    },
+  ],
+  [
+    'bogota',
+    {
+      key: 'bogota',
+      name: 'Bogota',
+      country: 'Colombia',
+      description: 'The capital of Colombia, a high-altitude metropolis known for its colonial architecture, museums, and vibrant cultural scene.',
+      image: '', // Placeholder
+      coordinates: { lat: 4.605833, lng: -74.056389 },
+      zoom: 12,
+      timezone: 'America/Bogota',
+    },
+  ],
+  [
+    'buenosaires',
+    {
+      key: 'buenosaires',
+      name: 'Buenos Aires',
+      country: 'Argentina',
+      description: 'The capital of Argentina, known for its European-style architecture, tango dancing, and vibrant cultural scene.',
+      image: '', // Placeholder
+      coordinates: { lat: -34.608333, lng: -58.371944 },
+      zoom: 12,
+      timezone: 'America/Argentina/Buenos_Aires',
+    },
+  ],
+  // Australia cities
+  [
+    'perth',
+    {
+      key: 'perth',
+      name: 'Perth',
+      country: 'Australia',
+      description: 'The capital of Western Australia, known for its sandy beaches, Kings Park, and Swan River.',
+      image: '', // Placeholder
+      coordinates: { lat: -31.9505, lng: 115.8605 },
+      zoom: 12,
+      timezone: 'Australia/Perth',
+    },
+  ],
+  [
+    'melbourne',
+    {
+      key: 'melbourne',
+      name: 'Melbourne',
+      country: 'Australia',
+      description: 'The coastal capital of Victoria, known for its vibrant arts scene, coffee culture, and sports events.',
+      image: '', // Placeholder
+      coordinates: { lat: -37.817798, lng: 144.968714 },
+      zoom: 12,
+      timezone: 'Australia/Melbourne',
+    },
+  ],
+  [
+    'sydney',
+    {
+      key: 'sydney',
+      name: 'Sydney',
+      country: 'Australia',
+      description: 'Australia\'s largest city, known for its iconic Opera House, Harbour Bridge, and beautiful beaches.',
+      image: '', // Placeholder
+      coordinates: { lat: -33.85681, lng: 151.21514 },
+      zoom: 12,
+      timezone: 'Australia/Sydney',
+    },
+  ],
+  [
+    'auckland',
+    {
+      key: 'auckland',
+      name: 'Auckland',
+      country: 'New Zealand',
+      description: 'New Zealand\'s largest city, built around two harbors and known for its diverse landscapes and volcanic cones.',
+      image: '', // Placeholder
+      coordinates: { lat: -36.848472, lng: 174.762306 },
+      zoom: 12,
+      timezone: 'Pacific/Auckland',
+    },
+  ],
+  [
+    'wellington',
+    {
+      key: 'wellington',
+      name: 'Wellington',
+      country: 'New Zealand',
+      description: 'The capital of New Zealand, known for its waterfront promenade, sandy beaches, and cultural institutions.',
+      image: '', // Placeholder
+      coordinates: { lat: -41.285347, lng: 174.767825 },
+      zoom: 12,
+      timezone: 'Pacific/Auckland',
+    },
+  ],
+  // Africa cities
+  [
+    'telaviv',
+    {
+      key: 'telaviv',
+      name: 'Tel Aviv',
+      country: 'Israel',
+      description: 'A vibrant coastal city on the Mediterranean Sea, known for its Bauhaus architecture, beaches, and thriving tech scene.',
+      image: '', // Placeholder
+      coordinates: { lat: 32.0853, lng: 34.7818 },
+      zoom: 13,
+      timezone: 'Asia/Jerusalem',
+    },
+  ],
 
 ]);
 
