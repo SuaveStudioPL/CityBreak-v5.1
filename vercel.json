@@ -9,6 +9,10 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+    { "src": "/city/(?<city>[^/]+)/?", "dest": "/index.html" },
+    { "src": "/toilets/?", "dest": "/index.html" },
+    { "src": "/about/?", "dest": "/index.html" },
+    { "src": "/legal/?", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

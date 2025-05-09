@@ -1,8 +1,25 @@
+# CityBreak - Travel Guide Application
+# https://citybreak.world
+
 User-agent: *
 Allow: /
-
-# Allow all bots to access all content
 Disallow:
+
+# Explicitly allow Google and other major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
 
 # Sitemap location
 Sitemap: https://citybreak.world/sitemap.xml
